@@ -1,0 +1,19 @@
+{
+  "name": "red-contrib-miio-local",
+  "version": "0.0.1",
+  "description": "U by Moen Smart Shower Control",
+  "node-red": {
+    "nodes": {
+      "in": "src/in.js",
+      "out": "src/out.js",
+      "config": "src/config.js"
+    }
+  },
+  "homepage": "https://github.com/gooxid/node-red-contrib-miio-local",
+  "author": "GooX",
+  "license": "ISC",
+  "dependencies": {
+    "abstract-things": "^0.9.0",
+    "miio": "^0.15.6"
+  }
+}

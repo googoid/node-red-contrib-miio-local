@@ -1,0 +1,25 @@
+<script type="text/x-red" data-template-name="miio-local-config">
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-message"></i> Name</label>
+    <input type="email" id="node-config-input-name" placeholder="Name">
+  </div>
+</script>
+<!-- <div class="form-row">
+    <label for="node-config-input-"><i class="fa fa-message"></i> </label>
+    <input type="email" id="node-config-input-" placeholder="miio Devices">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-"><i class="fa fa-message"></i> Email</label>
+    <input type="email" id="node-config-input-email" placeholder="U by Moen Account Email">
+  </div> -->
+<script type="text/javascript">
+  RED.nodes.registerType('miio-local-config', {
+    category: 'config',
+    defaults: {
+      name: { value: 'miio Config', required: true }
+    },
+    label: function () {
+      return this.name || 'miio-local-config';
+    }
+  });
+</script>

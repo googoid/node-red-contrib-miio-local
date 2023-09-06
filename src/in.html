@@ -1,0 +1,110 @@
+<script type="text/x-red" data-template-name="miio-local-input">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-config"><i class="fa fa-person"></i>miio Config</label>
+    <input type="text" id="node-input-config" placeholder="miio Config">
+  </div>
+  <div class="form-row">
+    <label for="select-device"><i class="fa fa-person"></i>Device</label>
+    <select id="select-device" style="width: 70%" placeholder="Device"></select>
+
+    <input type="hidden" id="node-input-device">
+  </div>
+  <div class="form-row">
+    <label for="node-input-token"><i class="fa fa-person"></i>Token</label>
+    <input type="text" id="node-input-token" placeholder="Token">
+  </div>
+  <div class="form-row">
+    <label for="node-input-pollDuration"><i class="fa fa-person"></i>Poll Duration</label>
+    <input type="text" id="node-input-pollDuration" placeholder="Milliseconds">
+  </div>
+</script>
+<!-- <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-account"><i class="fa fa-person"></i>U by Moen Account</label>
+    <input type="text" id="node-input-account" placeholder="Account">
+  </div>
+  <div class="form-row">
+    <label for="showers"><i class="fa fa-person"></i>Shower</label>
+    <select id="showers" placeholder="Shower"></select>
+
+    <input type="hidden" id="node-input-shower">
+  </div> -->
+<script type="text/javascript">
+  RED.nodes.registerType('miio-local-input', {
+    category: 'input',
+    defaults: {
+      name: { required: false },
+      config: {
+        value: 'miio Config',
+        required: true,
+        type: 'miio-local-config'
+      },
+      device: { required: true },
+      token: { required: true },
+      pollDuration: { required: false }
+    },
+    color: '#f49242',
+    icon: 'shower.png',
+    inputs: 0,
+    outputs: 1,
+    label: function () {
+      return this.name || `miio Device ${this.device}`;
+    },
+    oneditprepare: function () {
+      function refreshDeviceList(selectedDevice) {
+        $.getJSON('miio-local/devices', {
+          config_id: $('#node-input-config').val()
+        })
+          .done(devices => {
+            $('#select-device').empty();
+
+            for (let device of devices) {
+              $('#select-device').append(
+                $('<option>')
+                  .val(device.id)
+                  .text(
+                    device.address +
+                      (device.hostname
+                        ? ` (${device.hostname}, ${device.id})`
+                        : ` (${device.id})`)
+                  )
+              );
+            }
+
+            $('#select-device').val(selectedDevice);
+          })
+          .fail(err => {
+            $('#select-device').empty();
+            RED.notify(err.responseText, 'error');
+          });
+      }
+
+      $('#node-input-config').change(val => {
+        const selectedDevice = $('#node-input-device').val();
+        const config_id = $('#node-input-config').val();
+        $('#select-device').empty();
+        if (config_id == '_ADD_' || !config_id) {
+          return;
+        }
+        const config = RED.nodes.node(config_id);
+        if (!config) {
+          return;
+        }
+        refreshDeviceList(selectedDevice);
+      });
+
+      $('#select-device').change(() => {
+        $('#node-input-device').val($('#select-device').val());
+      });
+    },
+    oneditcancel: function () {},
+    oneditsave: function () {}
+  });
+</script>
