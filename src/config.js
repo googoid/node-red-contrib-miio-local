@@ -1,7 +1,9 @@
 module.exports = function (RED) {
   const YeelightColor = require('miio/lib/devices/yeelight.color');
+  const ChuangMiPlugV1 = require('miio/lib/devices/chuangmi.plug.v1');
   const models = require('miio/lib/models');
   models['yeelink.light.color5'] = YeelightColor;
+  models['chuangmi.plug.hmi206'] = ChuangMiPlugV1;
 
   const miio = require('miio');
 
