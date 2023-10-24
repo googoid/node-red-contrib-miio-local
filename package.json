@@ -1,7 +1,7 @@
 {
-  "name": "red-contrib-miio-local",
-  "version": "0.0.2",
-  "description": "U by Moen Smart Shower Control",
+  "name": "node-red-contrib-miio-local",
+  "version": "0.0.3",
+  "description": "Mi Home Devices Local Network Control",
   "node-red": {
     "nodes": {
       "in": "src/in.js",
