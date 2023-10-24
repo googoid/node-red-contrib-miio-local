@@ -1,6 +1,6 @@
 {
   "name": "red-contrib-miio-local",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "U by Moen Smart Shower Control",
   "node-red": {
     "nodes": {
